@@ -103,13 +103,15 @@ def main():
 
         # Carica tile
         data = np.load(os.path.join(DATA_DIR, row['tile_path']))
-        img  = data['image'][0]
+        img  = data['image'][2]  # Canale Sobel pre-calcolato
         mask = data['mask'][0]
 
         ax_img.clear()
         ax_img.imshow(img, cmap='gray')
-        ax_img.set_title(os.path.basename(row['tile_path']),
-                         fontsize=11, color='white')
+        ax_img.set_title(
+            f"{os.path.basename(row['tile_path'])} — Sobel",
+            fontsize=11, color='white'
+        )
         ax_img.axis('off')
 
         ax_mask.clear()
