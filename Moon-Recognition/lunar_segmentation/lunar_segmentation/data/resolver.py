@@ -8,16 +8,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Reference paper that inspired the workflow and the optional ESSA-style
+# extension: Elsevier PII S0019103525002222 (Icarus). Not part of the data
+# manifest — it is a paper, not a downloadable dataset.
 DOWNLOAD_MANIFEST = [
-    {
-        "key": "article_pdf",
-        "category": "paper",
-        "access_mode": "local_file",
-        "access_url_or_page": "/mnt/data/1-s2.0-S0019103525002222-main.pdf",
-        "match_or_direct_url": "local upload",
-        "purpose": "Primary paper that inspired the workflow and the optional ESSA-style extension.",
-        "notes": "Attached by the user."
-    },
     {
         "key": "wac_global_product_page_016p",
         "category": "imagery",
@@ -108,15 +102,9 @@ DOWNLOAD_MANIFEST = [
         "purpose": "Sinuous rille atlas Table 2.",
         "notes": "Used as an optional proxy label source for lava-tube-related surface expressions."
     },
-    {
-        "key": "lunar_craters_csv",
-        "category": "vector_labels",
-        "access_mode": "local_file",
-        "access_url_or_page": "/home/zingales/repositories/Moon/lunar_segmentation/data/raw/lunar_crater_database_robbins_2018_bundle/data/lunar_crater_database_robbins_2018.csv",
-        "match_or_direct_url": "local csv",
-        "purpose": "CSV version of the crater database with proper column names.",
-        "notes": "Generated from the downloaded database; used for crater masking."
-    },
+    # NOTE: the crater CSV (lunar_crater_database_robbins_2018.csv) is not a
+    # separate download — it ships inside the USGS bundle above and
+    # label_loader.load_all_labels() locates it by filename in raw_dir.
     {
         "key": "essa_zenodo_page",
         "category": "optional_reference",

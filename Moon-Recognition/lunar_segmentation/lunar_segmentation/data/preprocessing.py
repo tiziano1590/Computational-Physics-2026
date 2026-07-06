@@ -22,25 +22,70 @@ CLASS_NAMES = [
 CLASS_TO_INDEX = {name: i for i, name in enumerate(CLASS_NAMES)}
 
 def build_three_channel_input(gray: np.ndarray) -> np.ndarray:
-    """
-    Creates a 3-channel input for the model using normalization, CLAHE, and Sobel filtering.
+    """3-channel input: [normalised, CLAHE, Sobel edges].
+
+    CLAHE (equalize_adapthist) is the expensive step (~3 s per large tile on CPU).
+    Call precompute_tile_inputs() once to cache results and avoid paying this cost
+    on every inference run.
     """
     gray = gray.astype(np.float32)
     if gray.size == 0:
         return np.zeros((3, gray.shape[0], gray.shape[1]), dtype=np.float32)
 
     gmin, gmax = float(gray.min()), float(gray.max())
-    if gmax > gmin:
-        norm = (gray - gmin) / (gmax - gmin)
-    else:
-        norm = np.zeros_like(gray, dtype=np.float32)
+    norm = (gray - gmin) / (gmax - gmin) if gmax > gmin else np.zeros_like(gray)
 
-    # Contrast Limited Adaptive Histogram Equalization
     clahe = exposure.equalize_adapthist(norm, clip_limit=0.03).astype(np.float32)
-    # Sobel operator for edge detection
     sobel = filters.sobel(norm).astype(np.float32)
 
     return np.stack([norm, clahe, sobel], axis=0)
+
+
+def precompute_tile_inputs(
+    tiles_dir: Path,
+    output_dir: Path,
+    force: bool = False,
+) -> int:
+    """Run build_three_channel_input on every PNG in tiles_dir and save to output_dir.
+
+    This is a one-time cost (~3 s/tile × 3 639 tiles ≈ 3 hours).  Once done,
+    inference loads the saved .npz files directly and skips CLAHE entirely.
+
+    Args:
+        tiles_dir:  directory containing tile_*.png files.
+        output_dir: where to write preprocessed tile_*.npz files.
+        force:      reprocess even if the output file already exists.
+
+    Returns:
+        Number of tiles actually processed (skips existing unless force=True).
+    """
+    from PIL import Image
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    tile_files = sorted(tiles_dir.glob('tile_*.png'))
+    processed  = 0
+
+    for i, tile_path in enumerate(tile_files):
+        out_path = output_dir / (tile_path.stem + '.npz')
+        if not force and out_path.exists():
+            continue
+
+        img  = Image.open(tile_path).convert('L')
+        gray = np.array(img).astype(np.float32)
+        del img
+
+        chw = build_three_channel_input(gray)
+        del gray
+
+        np.savez(out_path, input=chw.astype(np.float16))
+        del chw
+        processed += 1
+
+        if processed % 100 == 0:
+            print(f"  precomputed {processed} / {len(tile_files)} tiles…", flush=True)
+
+    print(f"Done. {processed} tiles written to {output_dir}")
+    return processed
 
 def rasterize_multilabel(labels: dict, out_shape, transform, raster_crs):
     """

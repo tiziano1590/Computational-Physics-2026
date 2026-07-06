@@ -1,8 +1,21 @@
-# Training configuration for lunar segmentation
-batch_size: 8  # Increased from 4 for better convergence
-lr: 0.001
-epochs: 20     # Increased from 5 for proper convergence
-tile_size: 256  # Use 256x256 tiles for training (more context)
-stride: 128     # 50% overlap for 256x256 tiles
-augment: true  # Enable data augmentation
-seed: 42       # Random seed for reproducibility
+# Training configuration for lunar segmentation.
+#
+# Two protocols were used (see report, "Training Protocol"):
+#   - CloudVeneto T4 (definitive runs): full 15931-tile dataset, 30 epochs,
+#     batch 16, cosine annealing 1e-3 -> 1e-5 (T_max = epochs).
+#   - Local Apple-Silicon MPS (prototyping): 4000 tiles, 20 epochs, batch 8.
+# Values below are the definitive T4 protocol; the architecture_comparison
+# notebook exposes MAX_TILES / MAX_EPOCHS / BATCH_SIZE toggles for local runs.
+
+batch_size: 16
+lr: 0.001          # cosine-annealed to 1.0e-5 over `epochs` (CosineAnnealingLR)
+lr_min: 0.00001
+epochs: 30
+tile_size: 256     # must match the tiling used to build the .npz tiles
+stride: 128        # 50% overlap between adjacent tiles
+augment: false     # study-dependent; Study 3 found flips/rotations harmful on
+                   # the random split — re-validate with the spatial split
+seed: 42
+# Loss: FocalDice (gamma=2.0, alpha=0.25),
+# dice class weights [1.0, 4.0, 5.0, 5.0, 5.0, 5.0, 5.0]
+# Best architecture: use_residual=true, dropout=0.3, base_width=32

@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\graphicspath{{./}}
+
+\title{Lunar Surface Feature Segmentation\\
+\large LCP 2026 --- Group 2614}
+\author{Giancarlo Venturato}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\input{moon_recognition}
+
+% Bibliography for standalone preview; the group's main document provides
+% these entries in its own .bib file.
+\begin{thebibliography}{9}
+\bibitem{ronneberger2015unet}
+O.~Ronneberger, P.~Fischer, T.~Brox,
+``U-Net: Convolutional Networks for Biomedical Image Segmentation'',
+\emph{MICCAI}, 2015.
+\bibitem{lin2017focal}
+T.-Y.~Lin, P.~Goyal, R.~Girshick, K.~He, P.~Doll\'ar,
+``Focal Loss for Dense Object Detection'', \emph{ICCV}, 2017.
+\bibitem{shorten2019augmentation}
+C.~Shorten, T.~M.~Khoshgoftaar,
+``A survey on Image Data Augmentation for Deep Learning'',
+\emph{Journal of Big Data} 6(1), 60, 2019.
+\bibitem{zingales2026lecture}
+T.~Zingales, \emph{Moon Features Recognition} (Lecture 3b),
+Computational Physics, Physics of Data, University of Padova, 2026.
+\end{thebibliography}
+
+\end{document}

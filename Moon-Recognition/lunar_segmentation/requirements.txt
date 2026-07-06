@@ -7,6 +7,11 @@ scikit-image
 pyyaml
 tqdm
 
+# Data download / label loading
+requests        # resolver.py (LROC/USGS downloads)
+Pillow          # preprocessing.py (tile PNG loading)
+openpyxl        # label_loader.py (rille atlas .xlsx tables)
+
 # Geospatial
 rasterio
 geopandas
@@ -17,4 +22,3 @@ pyogrio
 # Deep Learning
 torch
 torchvision
-albumentations

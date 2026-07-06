@@ -9,5 +9,22 @@ __pycache__/
 node_modules/
 memory/
 CLAUDE.md
-data/
+# Root-level data directory only (anchored): an unanchored "data/" would also
+# ignore source code in lunar_segmentation/lunar_segmentation/data/
+/data/
 */notebooks/catboost_info
+
+# LaTeX build artifacts
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.pdf
+report/*.synctex.gz
+report/*.fdb_latexmk
+report/*.fls
+# YOLO training artifacts (keep local, attach to Release instead)
+*.pt
+*.onnx
+Moon-Recognition/yolo/YOLO/runs/**/weights/
+catboost_info/

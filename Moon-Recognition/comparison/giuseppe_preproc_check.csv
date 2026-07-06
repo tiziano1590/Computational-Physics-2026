@@ -1,0 +1,22 @@
+combo,cls,max_prob,mean_prob,frac_above_tau
+trained + package preproc (Table 8 conditions),impact_crater,0.996174693107605,0.7443835139274597,1.0
+trained + package preproc (Table 8 conditions),pit_skylight,0.10978861153125763,0.037659209221601486,6.103515625e-05
+trained + package preproc (Table 8 conditions),wrinkle_ridge,0.001296655973419547,8.403949323110282e-06,0.0
+trained + package preproc (Table 8 conditions),lobate_scarp,0.14003323018550873,0.033100761473178864,0.0008983612060546875
+trained + package preproc (Table 8 conditions),irregular_mare_patch,0.08653281629085541,0.028967255726456642,1.9073486328125e-06
+trained + package preproc (Table 8 conditions),apollo_site,0.08441866934299469,0.030835149809718132,0.0
+trained + package preproc (Table 8 conditions),candidate_rille,0.023304052650928497,0.0025458692107349634,0.0
+trained + Giuseppe preproc (mismatch only),impact_crater,0.8324192762374878,0.5074973106384277,1.0
+trained + Giuseppe preproc (mismatch only),pit_skylight,0.05896712467074394,0.039624493569135666,0.0
+trained + Giuseppe preproc (mismatch only),wrinkle_ridge,0.00029287231154739857,1.1202992936887313e-05,0.0
+trained + Giuseppe preproc (mismatch only),lobate_scarp,0.051356881856918335,0.02649298869073391,0.0
+trained + Giuseppe preproc (mismatch only),irregular_mare_patch,0.05353419855237007,0.03378964588046074,0.0
+trained + Giuseppe preproc (mismatch only),apollo_site,0.06259384751319885,0.0395764485001564,0.0
+trained + Giuseppe preproc (mismatch only),candidate_rille,0.00954749807715416,0.003280278528109193,0.0
+"random weights (pre-fix loader, Table 12 bug)",impact_crater,0.4848541021347046,0.4838593900203705,1.0
+"random weights (pre-fix loader, Table 12 bug)",pit_skylight,0.5357933044433594,0.5327014923095703,1.0
+"random weights (pre-fix loader, Table 12 bug)",wrinkle_ridge,0.4876457452774048,0.48645463585853577,1.0
+"random weights (pre-fix loader, Table 12 bug)",lobate_scarp,0.516829252243042,0.5139860510826111,1.0
+"random weights (pre-fix loader, Table 12 bug)",irregular_mare_patch,0.4764694571495056,0.4740990400314331,1.0
+"random weights (pre-fix loader, Table 12 bug)",apollo_site,0.480755090713501,0.47930240631103516,1.0
+"random weights (pre-fix loader, Table 12 bug)",candidate_rille,0.5239647030830383,0.5226829051971436,1.0
